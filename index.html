@@ -83,29 +83,31 @@
             padding-left: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            margin-top: 20px;
         }
 
         .channels-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 15px;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
         .channel-card {
             background: linear-gradient(135deg, #222, #1a1a1a);
             border: 1px solid #333;
-            padding: 20px 10px;
+            padding: 18px 10px;
             text-align: center;
             cursor: pointer;
             border-radius: 8px;
             font-weight: 600;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 50px;
+            min-height: 55px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
@@ -117,20 +119,29 @@
             box-shadow: 0 8px 20px rgba(229, 9, 20, 0.4);
         }
 
+        .resolution-tag {
+            font-size: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-weight: normal;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
             color: #666;
             font-size: 14px;
             border-top: 1px solid #222;
-            margin-top: 5px;
+            margin-top: 20px;
         }
 
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             .logo { font-size: 24px; }
             .channels-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
-            .channel-card { padding: 15px 5px; font-size: 13px; }
+            .channel-card { padding: 12px 5px; font-size: 12px; min-height: 45px; }
         }
     </style>
 </head>
@@ -144,7 +155,7 @@
     <div class="main-container">
         <div class="player-wrapper">
             <video id="playall-player" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" controls preload="auto" width="100%">
-                <source src="https://bdiptv.stream/live/somoy/index.m3u8" type="application/x-mpegURL">
+                <source src="https://bozztv.com/rongo/rongo-somoy/index.m3u8" type="application/x-mpegURL">
             </video>
         </div>
 
@@ -156,20 +167,14 @@
             <div class="category-title">🇧🇩 Bangladeshi Channels</div>
             <div class="channels-grid" id="bd-grid"></div>
 
-            <div class="category-title">🇮🇳 Indian Channels (Bangla & Hindi)</div>
-            <div class="channels-grid" id="in-grid"></div>
-
             <div class="category-title">🎬 Movies & Infotainment</div>
             <div class="channels-grid" id="entertainment-grid"></div>
-
-            <div class="category-title">🧸 Kids / Cartoon</div>
-            <div class="channels-grid" id="kids-grid"></div>
 
         </div>
     </div>
 
     <footer>
-        &copy; 2026 PlayAll Streaming Network. Powered by Open IPTV Streams.
+        &copy; 2026 PlayAll Streaming Network. Powered by Custom User IPTV Streams.
     </footer>
 
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
@@ -178,36 +183,39 @@
         // Initialize PlayAll Player
         const player = videojs('playall-player');
 
-        // PlayAll Verified & Public IPTV Links
+        // PlayAll Database with your provided links
         const channelData = {
             sports: [
-                { name: "T Sports", url: "https://bdiptv.stream/live/tsports/index.m3u8" },
-                { name: "Gazi TV (GTV)", url: "https://bdiptv.stream/live/gtv/index.m3u8" },
-                { name: "Sony Sports 1", url: "https://raw.githubusercontent.com/iptv-org/iptv/master/channels/in.m3u" }, // Fallback Group URL
-                { name: "Star Sports 1", url: "https://freeiptv.com/sports/starsports1.m3u8" }
+                { name: "T Sports", quality: "720p", url: "https://tvsen7.aynaott.com/tsportshd/index.m3u8" },
+                { name: "Gazi TV (GTV)", quality: "1080p", url: "http://tvn1.chowdhury-shaheb.com/gazitv/index.m3u8" }
             ],
             bangladesh: [
-                { name: "Somoy TV", url: "https://bdiptv.stream/live/somoy/index.m3u8" },
-                { name: "Jamuna TV", url: "https://bdiptv.stream/live/jamuna/index.m3u8" },
-                { name: "Independent TV", url: "https://bdiptv.stream/live/independent/index.m3u8" },
-                { name: "Channel i", url: "https://bdiptv.stream/live/channeli/index.m3u8" },
-                { name: "NTV", url: "https://bdiptv.stream/live/ntv/index.m3u8" },
-                { name: "Sangsad TV", url: "http://103.204.244.3:8081/hls/sangsad.m3u8" }
-            ],
-            india: [
-                { name: "Star Jalsha", url: "https://bdiptv.stream/live/starjalsha/index.m3u8" },
-                { name: "Zee Bangla", url: "https://bdiptv.stream/live/zeebangla/index.m3u8" },
-                { name: "Sony Aath", url: "https://bdiptv.stream/live/sonyaath/index.m3u8" },
-                { name: "Sony TV (Hindi)", url: "https://bdiptv.stream/live/sonytv/index.m3u8" }
+                { name: "Somoy News TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-somoy/index.m3u8" },
+                { name: "Jamuna TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-JamunaTelevision/index.m3u8" },
+                { name: "Channel 24", quality: "1080p", url: "https://bozztv.com/rongo/rongo-Channel24HD/index.m3u8" },
+                { name: "RTV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-RTV/index.m3u8" },
+                { name: "RTV (Alternative)", quality: "480p", url: "http://tvn3.chowdhury-shaheb.com/rtv/index.m3u8" },
+                { name: "Independent TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-IndependentTV/index.m3u8" },
+                { name: "ATN News", quality: "1080p", url: "https://bozztv.com/rongo/rongo-ATNNews/index.m3u8" },
+                { name: "Boishakhi TV", quality: "SD", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8" },
+                { name: "BTV National", quality: "1080p", url: "https://www.btvlive.gov.bd/streams/ef8b8bbc-98b7-4ba7-a49d-a0adaf259d35/ES/355ba051-9a60-48aa-adcf-5a6c64da8c5c/355ba051-9a60-48aa-adcf-5a6c64da8c5c_3_playlist.m3u8" },
+                { name: "BTV World", quality: "1080p", url: "https://www.btvlive.gov.bd/streams/ef8b8bbc-98b7-4ba7-a49d-a0adaf259d35/ES/d96eb7f4-83c2-4472-9597-3568390a8ebf/d96eb7f4-83c2-4472-9597-3568390a8ebf_3_playlist.m3u8" },
+                { name: "BTV Chattogram", quality: "1080p", url: "https://bozztv.com/rongo/rongo-BTVChattagram/index.m3u8" },
+                { name: "Ekhon TV", quality: "1080p", url: "https://tplay.live/out/bangladesh/ekhontv.index.m3u8" },
+                { name: "Ekushey TV", quality: "480p", url: "https://ekusheyserver.com/etvlivesn.m3u8" },
+                { name: "Desh TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-DeshTV/index.m3u8" },
+                { name: "DBC News", quality: "480p", url: "http://tvn3.chowdhury-shaheb.com/dbc/index.m3u8" },
+                { name: "News 24", quality: "1080p", url: "https://bozztv.com/rongo/rongo-News24HD/index.m3u8" },
+                { name: "Sangsad TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-SangsadTV/index.m3u8" },
+                { name: "Ananda TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-AnandaTV/index.m3u8" },
+                { name: "Ananda TV (Alternative)", quality: "480p", url: "http://103.99.249.139/anandatv/index.m3u8" },
+                { name: "Deshi TV", quality: "720p", url: "https://deshitv.deshitv24.net/live/myStream/playlist.m3u8" },
+                { name: "Green TV", quality: "1080p", url: "https://app.ncare.live/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI2/greentv.stream/live-orgin/greentv.stream/playlist.m3u8" },
+                { name: "Vokta TV", quality: "720p", url: "https://vokta.raytahost.com/live/voktatv/index.m3u8" }
             ],
             entertainment: [
-                { name: "Sony PIX", url: "https://bdiptv.stream/live/sonypix/index.m3u8" },
-                { name: "Discovery Channel", url: "https://bdiptv.stream/live/discovery/index.m3u8" },
-                { name: "National Geographic", url: "https://bdiptv.stream/live/natgeo/index.m3u8" }
-            ],
-            kids: [
-                { name: "Cartoon Network", url: "https://bdiptv.stream/live/cartoonnetwork/index.m3u8" },
-                { name: "Nickelodeon", url: "https://bdiptv.stream/live/nick/index.m3u8" }
+                { name: "Movie Bangla", quality: "SD", url: "http://alvetv.com/moviebanglatv/8080/index.m3u8" },
+                { name: "ATN Music", quality: "360p", url: "https://app.ncare.live/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI/atnmusic.stream/playlist.m3u8" }
             ]
         };
 
@@ -218,11 +226,20 @@
             channelData[categoryKey].forEach(channel => {
                 const card = document.createElement('div');
                 card.className = 'channel-card';
-                card.innerText = channel.name;
+                
+                // Add channel name
+                const nameSpan = document.createElement('span');
+                nameSpan.innerText = channel.name;
+                card.appendChild(nameSpan);
+
+                // Add quality tag
+                const qualitySpan = document.createElement('span');
+                qualitySpan.className = 'resolution-tag';
+                qualitySpan.innerText = channel.quality;
+                card.appendChild(qualitySpan);
                 
                 // Action on click
                 card.onclick = () => {
-                    // Update player source and play
                     player.src({ type: 'application/x-mpegURL', src: channel.url });
                     player.play();
                     
@@ -237,9 +254,7 @@
         // Render PlayAll Interface
         createPlayAllGrid('sports', 'sports-grid');
         createPlayAllGrid('bangladesh', 'bd-grid');
-        createPlayAllGrid('india', 'in-grid');
         createPlayAllGrid('entertainment', 'entertainment-grid');
-        createPlayAllGrid('kids', 'kids-grid');
     </script>
 </body>
 </html>
