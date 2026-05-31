@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayAll - Live TV Streaming</title>
+    <!-- Video.js CSS for Premium Player -->
+    <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
+    <style>
+        :root {
+            --primary-color: #E50914; /* Netflix Red */
+            --bg-color: #0b0b0b;
+            --card-bg: #181818;
+            --text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Premium Header Styling */
+        header {
+            background-color: rgba(0, 0, 0, 0.85);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: var(--text-color);
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        .tagline {
+            font-size: 14px;
+            color: #aaa;
+            font-style: italic;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        /* Player Styling */
+        .player-wrapper {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+            border: 1px solid #222;
+        }
+
+        /* Categories and Grid */
+        .category-section {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .category-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            border-left: 5px solid var(--primary-color);
+            padding-left: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .channels-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Modern Channel Button */
+        .channel-card {
+            background: linear-gradient(135deg, #222, #1a1a1a);
+            border: 1px solid #333;
+            padding: 20px 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .channel-card:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(229, 9, 20, 0.4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 14px;
+            border-top: 1px solid #222;
+            margin-top: 5px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header { padding: 15px 20px; }
+            .logo { font-size: 24px; }
+            .channels-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
+            .channel-card { padding: 15px 5px; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PlayAll Header -->
+    <header>
+        <div class="logo">Play<span>All</span></div>
+        <div class="tagline">Your Ultimate Live TV Hub</div>
+    </header>
+    
+    <div class="main-container">
+        <!-- Live Video Player -->
+        <div class="player-wrapper">
+            <video id="playall-player" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" controls preload="auto" width="100%">
+                <!-- Default Placeholder Stream (Demo) -->
+                <source src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" type="application/x-mpegURL">
+            </video>
+        </div>
+
+        <!-- Channels Grid Section -->
+        <div class="category-section">
+            
+            <div class="category-title">🏏 Sports Channels</div>
+            <div class="channels-grid" id="sports-grid"></div>
+
+            <div class="category-title">🇧🇩 Bangladeshi Channels</div>
+            <div class="channels-grid" id="bd-grid"></div>
+
+            <div class="category-title">🇮🇳 Indian Channels (Bangla & Hindi)</div>
+            <div class="channels-grid" id="in-grid"></div>
+
+            <div class="category-title">🎬 Movies & Infotainment</div>
+            <div class="channels-grid" id="entertainment-grid"></div>
+
+            <div class="category-title">🧸 Kids / Cartoon</div>
+            <div class="channels-grid" id="kids-grid"></div>
+
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 PlayAll Streaming Network. Hosted entirely on GitHub.
+    </footer>
+
+    <!-- Video.js Scripts -->
+    <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
+    
+    <script>
+        // Initialize PlayAll Player
+        const player = videojs('playall-player');
+
+        // PlayAll Channel Database
+        // [IMPORTANT]: Replace the placeholder URLs with actual M3U8 IPTV links
+        const channelData = {
+            sports: [
+                { name: "T Sports", url: "https://example.com/tsports.m3u8" },
+                { name: "Gazi TV (GTV)", url: "https://example.com/gtv.m3u8" },
+                { name: "Sony Sports 1", url: "https://example.com/sonysports1.m3u8" },
+                { name: "Star Sports 1", url: "https://example.com/starsports1.m3u8" }
+            ],
+            bangladesh: [
+                { name: "Somoy TV", url: "https://example.com/somoy.m3u8" },
+                { name: "Jamuna TV", url: "https://example.com/jamuna.m3u8" },
+                { name: "Independent TV", url: "https://example.com/independent.m3u8" },
+                { name: "Channel i", url: "https://example.com/channeli.m3u8" },
+                { name: "NTV", url: "https://example.com/ntv.m3u8" }
+            ],
+            india: [
+                { name: "Star Jalsha", url: "https://example.com/starjalsha.m3u8" },
+                { name: "Zee Bangla", url: "https://example.com/zeebangla.m3u8" },
+                { name: "Sony Aath", url: "https://example.com/sonyaath.m3u8" },
+                { name: "Sony TV (Hindi)", url: "https://example.com/sonytv.m3u8" },
+                { name: "Star Plus", url: "https://example.com/starplus.m3u8" }
+            ],
+            entertainment: [
+                { name: "Sony PIX", url: "https://example.com/sonypix.m3u8" },
+                { name: "Star Movies", url: "https://example.com/starmovies.m3u8" },
+                { name: "Discovery Channel", url: "https://example.com/discovery.m3u8" },
+                { name: "National Geographic", url: "https://example.com/natgeo.m3u8" }
+            ],
+            kids: [
+                { name: "Cartoon Network", url: "https://example.com/cn.m3u8" },
+                { name: "Nickelodeon", url: "https://example.com/nick.m3u8" },
+                { name: "Sony YAY", url: "https://example.com/sonyyay.m3u8" }
+            ]
+        };
+
+        // Function to inject channels into UI
+        function createPlayAllGrid(categoryKey, targetElementId) {
+            const gridContainer = document.getElementById(targetElementId);
+            
+            channelData[categoryKey].forEach(channel => {
+                const card = document.createElement('div');
+                card.className = 'channel-card';
+                card.innerText = channel.name;
+                
+                // Action on click
+                card.onclick = () => {
+                    player.src({ type: 'application/x-mpegURL', src: channel.url });
+                    player.play();
+                    // Smooth scroll back to player for mobile users
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                };
+                
+                gridContainer.appendChild(card);
+            });
+        }
+
+        // Render PlayAll Interface
+        createPlayAllGrid('sports', 'sports-grid');
+        createPlayAllGrid('bangladesh', 'bd-grid');
+        createPlayAllGrid('india', 'in-grid');
+        createPlayAllGrid('entertainment', 'entertainment-grid');
+        createPlayAllGrid('kids', 'kids-grid');
+    </script>
+</body>
+</html>
