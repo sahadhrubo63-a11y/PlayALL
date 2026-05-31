@@ -83,7 +83,7 @@
             padding-left: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
 
         .channels-grid {
@@ -121,11 +121,12 @@
 
         .resolution-tag {
             font-size: 10px;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             padding: 2px 6px;
             border-radius: 4px;
             margin-top: 5px;
             font-weight: normal;
+            color: #ccc;
         }
 
         footer {
@@ -155,7 +156,7 @@
     <div class="main-container">
         <div class="player-wrapper">
             <video id="playall-player" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" controls preload="auto" width="100%">
-                <source src="https://bozztv.com/rongo/rongo-somoy/index.m3u8" type="application/x-mpegURL">
+                <source src="https://feeds.intoday.in/aajtak/api/aajtakhd/master.m3u8" type="application/x-mpegURL">
             </video>
         </div>
 
@@ -167,8 +168,17 @@
             <div class="category-title">🇧🇩 Bangladeshi Channels</div>
             <div class="channels-grid" id="bd-grid"></div>
 
-            <div class="category-title">🎬 Movies & Infotainment</div>
-            <div class="channels-grid" id="entertainment-grid"></div>
+            <div class="category-title">🇮🇳 Indian Bangla Channels</div>
+            <div class="channels-grid" id="in-bangla-grid"></div>
+
+            <div class="category-title">📺 Hindi News & Entertainment</div>
+            <div class="channels-grid" id="hindi-grid"></div>
+
+            <div class="category-title">🎵 Music Channels</div>
+            <div class="channels-grid" id="music-grid"></div>
+
+            <div class="category-title">🙏 Devotional Channels</div>
+            <div class="channels-grid" id="devotional-grid"></div>
 
         </div>
     </div>
@@ -183,7 +193,7 @@
         // Initialize PlayAll Player
         const player = videojs('playall-player');
 
-        // PlayAll Database with your provided links
+        // Master Database combining previous lists and new playlist entries
         const channelData = {
             sports: [
                 { name: "T Sports", quality: "720p", url: "https://tvsen7.aynaott.com/tsportshd/index.m3u8" },
@@ -194,34 +204,52 @@
                 { name: "Jamuna TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-JamunaTelevision/index.m3u8" },
                 { name: "Channel 24", quality: "1080p", url: "https://bozztv.com/rongo/rongo-Channel24HD/index.m3u8" },
                 { name: "RTV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-RTV/index.m3u8" },
-                { name: "RTV (Alternative)", quality: "480p", url: "http://tvn3.chowdhury-shaheb.com/rtv/index.m3u8" },
                 { name: "Independent TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-IndependentTV/index.m3u8" },
                 { name: "ATN News", quality: "1080p", url: "https://bozztv.com/rongo/rongo-ATNNews/index.m3u8" },
                 { name: "Boishakhi TV", quality: "SD", url: "https://boishakhi.sonarbanglatv.com/boishakhi/boishakhitv/index.m3u8" },
                 { name: "BTV National", quality: "1080p", url: "https://www.btvlive.gov.bd/streams/ef8b8bbc-98b7-4ba7-a49d-a0adaf259d35/ES/355ba051-9a60-48aa-adcf-5a6c64da8c5c/355ba051-9a60-48aa-adcf-5a6c64da8c5c_3_playlist.m3u8" },
                 { name: "BTV World", quality: "1080p", url: "https://www.btvlive.gov.bd/streams/ef8b8bbc-98b7-4ba7-a49d-a0adaf259d35/ES/d96eb7f4-83c2-4472-9597-3568390a8ebf/d96eb7f4-83c2-4472-9597-3568390a8ebf_3_playlist.m3u8" },
-                { name: "BTV Chattogram", quality: "1080p", url: "https://bozztv.com/rongo/rongo-BTVChattagram/index.m3u8" },
                 { name: "Ekhon TV", quality: "1080p", url: "https://tplay.live/out/bangladesh/ekhontv.index.m3u8" },
-                { name: "Ekushey TV", quality: "480p", url: "https://ekusheyserver.com/etvlivesn.m3u8" },
-                { name: "Desh TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-DeshTV/index.m3u8" },
                 { name: "DBC News", quality: "480p", url: "http://tvn3.chowdhury-shaheb.com/dbc/index.m3u8" },
                 { name: "News 24", quality: "1080p", url: "https://bozztv.com/rongo/rongo-News24HD/index.m3u8" },
-                { name: "Sangsad TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-SangsadTV/index.m3u8" },
-                { name: "Ananda TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-AnandaTV/index.m3u8" },
-                { name: "Ananda TV (Alternative)", quality: "480p", url: "http://103.99.249.139/anandatv/index.m3u8" },
-                { name: "Deshi TV", quality: "720p", url: "https://deshitv.deshitv24.net/live/myStream/playlist.m3u8" },
-                { name: "Green TV", quality: "1080p", url: "https://app.ncare.live/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI2/greentv.stream/live-orgin/greentv.stream/playlist.m3u8" },
-                { name: "Vokta TV", quality: "720p", url: "https://vokta.raytahost.com/live/voktatv/index.m3u8" }
+                { name: "Sangsad TV", quality: "1080p", url: "https://bozztv.com/rongo/rongo-SangsadTV/index.m3u8" }
             ],
-            entertainment: [
-                { name: "Movie Bangla", quality: "SD", url: "http://alvetv.com/moviebanglatv/8080/index.m3u8" },
-                { name: "ATN Music", quality: "360p", url: "https://app.ncare.live/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI/atnmusic.stream/playlist.m3u8" }
+            inBangla: [
+                { name: "ABP Ananda", quality: "1080p", url: "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/ananda-livetv/master.m3u8" },
+                { name: "Aamar Bangla", quality: "720p", url: "https://app.ncare.live/c3VydmVyX8RpbEU9Mi8xNy8yMDE0GIDU6RgzQ6NTAgdEoaeFzbF92YWxIZTO0U0ezN1IzMyfvcGVMZEJCTEFWeVN3PTOmdFsaWRtaW51aiPhnPTI/amarbanglatv.stream/playlist.m3u8" },
+                { name: "AKD Calcutta News", quality: "1080p", url: "https://live.legitpro.co.in/cnnnews/index.m3u8" },
+                { name: "Anand TV", quality: "1080p", url: "https://live.legitpro.co.in/anandtv/index.m3u8" },
+                { name: "Ananda Barta", quality: "720p", url: "https://account19.livebox.co.in/Anandabarta2hls/live.m3u8" }
+            ],
+            hindi: [
+                { name: "Aaj Tak HD", quality: "1080p", url: "https://feeds.intoday.in/aajtak/api/aajtakhd/master.m3u8" },
+                { name: "Aaj Tak", quality: "720p", url: "https://feeds.intoday.in/aajtak/api/master.m3u8" },
+                { name: "&TV International", quality: "1080p", url: "https://amg01117-amg01117c1-amgplt0029.playout.now3.amagi.tv/playlist/amg01117-amg01117c1-amgplt0029/playlist.m3u8" },
+                { name: "&TV (Standard)", quality: "576p", url: "http://103.229.254.25:7001/play/a09v/index.m3u8" },
+                { name: "ABP News", quality: "1080p", url: "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/abpnews-livetv/master.m3u8" },
+                { name: "ABP Ganga", quality: "1080p", url: "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/ganga-livetv/master.m3u8" },
+                { name: "ABP Asmita", quality: "1080p", url: "https://d2l4ar6y3mrs4k.cloudfront.net/live-streaming/asmita-livetv/master.m3u8" },
+                { name: "Amar Ujala", quality: "1080p", url: "https://amarujala.ottlive.co.in/amarujala/index.m3u8" },
+                { name: "22Scope News", quality: "1080p", url: "https://thelegitpro.in/HDlive/22scope/index.fmp4.m3u8" }
+            ],
+            music: [
+                { name: "9X XM", quality: "1080p", url: "https://9xjio.wiseplayout.com/9XM/master.m3u8" },
+                { name: "9X Jalwa", quality: "1080p", url: "https://b.jsrdn.com/strm/channels/9xjalwa/master.m3u8" },
+                { name: "9X Jhakaas", quality: "1080p", url: "https://9xjio.wiseplayout.com/9X_Jhakaas/master.m3u8" },
+                { name: "9X Tashan", quality: "1080p", url: "https://9xjio.wiseplayout.com/9X_Tashan/master.m3u8" }
+            ],
+            devotional: [
+                { name: "Aastha TV", quality: "720p", url: "https://aasthaott.akamaized.net/110923/smil:aasthatv.smil/index.m3u8" },
+                { name: "Aastha Bhajan", quality: "480p", url: "https://aasthaott.akamaized.net/110923/smil:bhajan.smil/playlist.m3u8" },
+                { name: "Aastha Prime 1", quality: "720p", url: "https://aasthaott.akamaized.net/110923/smil:aasthaprime1.smil/master.m3u8" },
+                { name: "Adhyatm TV", quality: "720p", url: "https://mumbai-edge.smartplaytv.in/AdhyatmTV/index.m3u8" }
             ]
         };
 
         // Function to inject channels into UI
         function createPlayAllGrid(categoryKey, targetElementId) {
             const gridContainer = document.getElementById(targetElementId);
+            if (!gridContainer || !channelData[categoryKey]) return;
             
             channelData[categoryKey].forEach(channel => {
                 const card = document.createElement('div');
@@ -251,10 +279,13 @@
             });
         }
 
-        // Render PlayAll Interface
+        // Render PlayAll Interface sections
         createPlayAllGrid('sports', 'sports-grid');
         createPlayAllGrid('bangladesh', 'bd-grid');
-        createPlayAllGrid('entertainment', 'entertainment-grid');
+        createPlayAllGrid('inBangla', 'in-bangla-grid');
+        createPlayAllGrid('hindi', 'hindi-grid');
+        createPlayAllGrid('music', 'music-grid');
+        createPlayAllGrid('devotional', 'devotional-grid');
     </script>
 </body>
 </html>
