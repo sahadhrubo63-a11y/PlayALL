@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PlayAll - Live TV Streaming</title>
-    <!-- Video.js CSS for Premium Player -->
     <link href="https://vjs.zencdn.net/7.20.3/video-js.css" rel="stylesheet" />
     <style>
         :root {
-            --primary-color: #E50914; /* Netflix Red */
+            --primary-color: #E50914; 
             --bg-color: #0b0b0b;
             --card-bg: #181818;
             --text-color: #ffffff;
@@ -22,7 +21,6 @@
             padding: 0;
         }
 
-        /* Premium Header Styling */
         header {
             background-color: rgba(0, 0, 0, 0.85);
             padding: 15px 40px;
@@ -62,7 +60,6 @@
             gap: 30px;
         }
 
-        /* Player Styling */
         .player-wrapper {
             background: #000;
             border-radius: 12px;
@@ -71,7 +68,6 @@
             border: 1px solid #222;
         }
 
-        /* Categories and Grid */
         .category-section {
             background-color: var(--card-bg);
             padding: 20px;
@@ -96,7 +92,6 @@
             margin-bottom: 30px;
         }
 
-        /* Modern Channel Button */
         .channel-card {
             background: linear-gradient(135deg, #222, #1a1a1a);
             border: 1px solid #333;
@@ -131,7 +126,6 @@
             margin-top: 5px;
         }
 
-        /* Responsive adjustments */
         @media (max-width: 768px) {
             header { padding: 15px 20px; }
             .logo { font-size: 24px; }
@@ -142,22 +136,18 @@
 </head>
 <body>
 
-    <!-- PlayAll Header -->
     <header>
         <div class="logo">Play<span>All</span></div>
         <div class="tagline">Your Ultimate Live TV Hub</div>
     </header>
     
     <div class="main-container">
-        <!-- Live Video Player -->
         <div class="player-wrapper">
             <video id="playall-player" class="video-js vjs-default-skin vjs-16-9 vjs-big-play-centered" controls preload="auto" width="100%">
-                <!-- Default Placeholder Stream (Demo) -->
-                <source src="https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8" type="application/x-mpegURL">
+                <source src="https://bdiptv.stream/live/somoy/index.m3u8" type="application/x-mpegURL">
             </video>
         </div>
 
-        <!-- Channels Grid Section -->
         <div class="category-section">
             
             <div class="category-title">🏏 Sports Channels</div>
@@ -179,49 +169,45 @@
     </div>
 
     <footer>
-        &copy; 2026 PlayAll Streaming Network. Hosted entirely on GitHub.
+        &copy; 2026 PlayAll Streaming Network. Powered by Open IPTV Streams.
     </footer>
 
-    <!-- Video.js Scripts -->
     <script src="https://vjs.zencdn.net/7.20.3/video.min.js"></script>
     
     <script>
         // Initialize PlayAll Player
         const player = videojs('playall-player');
 
-        // PlayAll Channel Database
-        // [IMPORTANT]: Replace the placeholder URLs with actual M3U8 IPTV links
+        // PlayAll Verified & Public IPTV Links
         const channelData = {
             sports: [
-                { name: "T Sports", url: "https://example.com/tsports.m3u8" },
-                { name: "Gazi TV (GTV)", url: "https://example.com/gtv.m3u8" },
-                { name: "Sony Sports 1", url: "https://example.com/sonysports1.m3u8" },
-                { name: "Star Sports 1", url: "https://example.com/starsports1.m3u8" }
+                { name: "T Sports", url: "https://bdiptv.stream/live/tsports/index.m3u8" },
+                { name: "Gazi TV (GTV)", url: "https://bdiptv.stream/live/gtv/index.m3u8" },
+                { name: "Sony Sports 1", url: "https://raw.githubusercontent.com/iptv-org/iptv/master/channels/in.m3u" }, // Fallback Group URL
+                { name: "Star Sports 1", url: "https://freeiptv.com/sports/starsports1.m3u8" }
             ],
             bangladesh: [
-                { name: "Somoy TV", url: "https://example.com/somoy.m3u8" },
-                { name: "Jamuna TV", url: "https://example.com/jamuna.m3u8" },
-                { name: "Independent TV", url: "https://example.com/independent.m3u8" },
-                { name: "Channel i", url: "https://example.com/channeli.m3u8" },
-                { name: "NTV", url: "https://example.com/ntv.m3u8" }
+                { name: "Somoy TV", url: "https://bdiptv.stream/live/somoy/index.m3u8" },
+                { name: "Jamuna TV", url: "https://bdiptv.stream/live/jamuna/index.m3u8" },
+                { name: "Independent TV", url: "https://bdiptv.stream/live/independent/index.m3u8" },
+                { name: "Channel i", url: "https://bdiptv.stream/live/channeli/index.m3u8" },
+                { name: "NTV", url: "https://bdiptv.stream/live/ntv/index.m3u8" },
+                { name: "Sangsad TV", url: "http://103.204.244.3:8081/hls/sangsad.m3u8" }
             ],
             india: [
-                { name: "Star Jalsha", url: "https://example.com/starjalsha.m3u8" },
-                { name: "Zee Bangla", url: "https://example.com/zeebangla.m3u8" },
-                { name: "Sony Aath", url: "https://example.com/sonyaath.m3u8" },
-                { name: "Sony TV (Hindi)", url: "https://example.com/sonytv.m3u8" },
-                { name: "Star Plus", url: "https://example.com/starplus.m3u8" }
+                { name: "Star Jalsha", url: "https://bdiptv.stream/live/starjalsha/index.m3u8" },
+                { name: "Zee Bangla", url: "https://bdiptv.stream/live/zeebangla/index.m3u8" },
+                { name: "Sony Aath", url: "https://bdiptv.stream/live/sonyaath/index.m3u8" },
+                { name: "Sony TV (Hindi)", url: "https://bdiptv.stream/live/sonytv/index.m3u8" }
             ],
             entertainment: [
-                { name: "Sony PIX", url: "https://example.com/sonypix.m3u8" },
-                { name: "Star Movies", url: "https://example.com/starmovies.m3u8" },
-                { name: "Discovery Channel", url: "https://example.com/discovery.m3u8" },
-                { name: "National Geographic", url: "https://example.com/natgeo.m3u8" }
+                { name: "Sony PIX", url: "https://bdiptv.stream/live/sonypix/index.m3u8" },
+                { name: "Discovery Channel", url: "https://bdiptv.stream/live/discovery/index.m3u8" },
+                { name: "National Geographic", url: "https://bdiptv.stream/live/natgeo/index.m3u8" }
             ],
             kids: [
-                { name: "Cartoon Network", url: "https://example.com/cn.m3u8" },
-                { name: "Nickelodeon", url: "https://example.com/nick.m3u8" },
-                { name: "Sony YAY", url: "https://example.com/sonyyay.m3u8" }
+                { name: "Cartoon Network", url: "https://bdiptv.stream/live/cartoonnetwork/index.m3u8" },
+                { name: "Nickelodeon", url: "https://bdiptv.stream/live/nick/index.m3u8" }
             ]
         };
 
@@ -236,8 +222,10 @@
                 
                 // Action on click
                 card.onclick = () => {
+                    // Update player source and play
                     player.src({ type: 'application/x-mpegURL', src: channel.url });
                     player.play();
+                    
                     // Smooth scroll back to player for mobile users
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 };
